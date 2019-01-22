@@ -18,7 +18,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailes);
         ArrayList<Step> stepsList = new ArrayList<Step>();
-        stepsList =getIntent().getParcelableArrayListExtra("steps");
+        stepsList = getIntent().getParcelableArrayListExtra("steps");
 
 
         Intent intent = getIntent();
@@ -41,3 +41,4 @@ public class DetailsActivity extends AppCompatActivity {
 
 
 }
+
