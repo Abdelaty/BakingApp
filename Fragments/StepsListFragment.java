@@ -51,6 +51,8 @@ public class StepsListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         stepsList_rv.setLayoutManager(layoutManager);
         stepsList_rv.setAdapter(stepsListAdapter);
+        stepsListAdapter.notifyDataSetChanged();
+
 
     }
 
@@ -59,6 +61,7 @@ public class StepsListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         ingredientsList_rv.setLayoutManager(layoutManager);
         ingredientsList_rv.setAdapter(ingredientsAdapter);
+        ingredientsAdapter.notifyDataSetChanged();
 
     }
 }

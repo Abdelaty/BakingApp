@@ -1,7 +1,10 @@
 package com.example.karim.bakingapp.Adapters;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.karim.bakingapp.Activites.MainActivity;
 import com.example.karim.bakingapp.Activites.R;
@@ -18,6 +20,7 @@ import com.example.karim.bakingapp.Activites.StepsListActivity;
 import com.example.karim.bakingapp.Models.Ingredient;
 import com.example.karim.bakingapp.Models.Model;
 import com.example.karim.bakingapp.Models.Step;
+import com.example.karim.bakingapp.Ui.NewAppWidget;
 
 import java.util.ArrayList;
 
@@ -26,7 +29,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
     private ArrayList<Model> recipeList;
     private ArrayList<Step> stepsList;
     private ArrayList<Ingredient> ingredientsList = new ArrayList<Ingredient>();
-
+    int position;
 
     private Context context;
     private MainActivity mainActivity;
@@ -67,16 +70,17 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(context, "Item num" + recipeList.get(position) + " Clicked", Toast.LENGTH_LONG).show();
-
 
                 Intent myIntent = new Intent(context, StepsListActivity.class);
                 myIntent.putParcelableArrayListExtra("steps", stepsList); //Optional parameters
                 myIntent.putParcelableArrayListExtra("ingredients", ingredientsList); //Optional parameters
 
+                    Intent intent = new Intent(NewAppWidget.ACTION_TEXT_CHANGED);
+                intent.putExtra("NewString", ingredientsList.get(position).getQuantity()+" "+ingredientsList.get(position).getMeasure()+ingredientsList.get(position).getIngredient()+"\n");
+                context.sendBroadcast(intent);
 //                Log.v("stepList", ingredientsList.get(2).getMeasure());
                 context.startActivity(myIntent);
-             //   context.startActivity(ingList);
+                //   context.startActivity(ingList);
 
             }
         });
@@ -118,5 +122,26 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                 }
             });
         }
+    }
+
+    void widget() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < ingredientsList.size(); i++) {
+            int serial = i + 1;
+            builder.append(serial + "- " + ingredientsList.get(i).getQuantity() + " " + ingredientsList.get(i).getMeasure() + " of " + ingredientsList.get(i).getIngredient() + "\n");
+        }
+
+        SharedPreferences preferences = context.getSharedPreferences("Recipe", 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("ingredientsWidget", builder.toString());
+        editor.apply();
+
+//            Intent intentWidget = new Intent(getBaseContext(),RecipesWidget.class);
+//            intentWidget.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, NewAppWidget.class));
+//            intentWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+//            sendBroadcast(intentWidget);
+        NewAppWidget myWidget = new NewAppWidget();
+        myWidget.onUpdate(context, AppWidgetManager.getInstance(context), ids);
     }
 }

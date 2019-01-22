@@ -10,7 +10,6 @@ import android.util.Log;
 import com.example.karim.bakingapp.Fragments.StepsListFragment;
 import com.example.karim.bakingapp.Models.Ingredient;
 import com.example.karim.bakingapp.Models.Step;
-import com.example.karim.bakingapp.SharedPrefHelper;
 
 import java.util.ArrayList;
 
@@ -24,11 +23,10 @@ public class StepsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_steps_list);
         stepsList_rv = findViewById(R.id.steps_rv);
-        Context context = getApplicationContext();
 
 
         ArrayList<Step> stepsList = getIntent().getParcelableArrayListExtra("steps");
-        ArrayList<Ingredient> ingredientsList = getIntent().getParcelableArrayListExtra("ingredients");
+       // ArrayList<Ingredient> ingredientsList = getIntent().getParcelableArrayListExtra("ingredients");
         ingredientsList = getIntent().getParcelableArrayListExtra("ingredients");
         android.app.FragmentManager fm = getFragmentManager();
         android.app.FragmentTransaction ft = fm.beginTransaction();
@@ -38,20 +36,8 @@ public class StepsListActivity extends AppCompatActivity {
         Intent myIntent = new Intent(getApplicationContext(), StepsListFragment.class);
         myIntent.putParcelableArrayListExtra("steps", stepsList); //Optional parameters
         myIntent.putParcelableArrayListExtra("ingredients", ingredientsList); //Optional parameters
-        setPreference();
+//        setPreference();
 
     }
-
-    private void setPreference() {
-        ArrayList<Ingredient> list = SharedPrefHelper.getList(this);
-        if (list != null) {
-            SharedPrefHelper.ClearArrayList(this);
-            SharedPrefHelper.saveArrayList(ingredientsList, this);
-        } else {
-            SharedPrefHelper.saveArrayList(ingredientsList, this);
-            Log.v("FFF", ingredientsList.get(2).getIngredient());
-
-        }
-        Log.v("FFF1", ingredientsList.get(2).getIngredient());
-    }
+//
 }

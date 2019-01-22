@@ -3,47 +3,33 @@ package com.example.karim.bakingapp.Ui;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.example.karim.bakingapp.Activites.R;
 import com.example.karim.bakingapp.Models.Ingredient;
-import com.example.karim.bakingapp.SharedPrefHelper;
 
 import java.util.ArrayList;
+
+//import com.example.karim.bakingapp.SharedPrefHelper;
 
 /**
  * Implementation of App Widget functionality.
  */
+
 public class NewAppWidget extends AppWidgetProvider {
     private static ArrayList<Ingredient> mIngredients;
     String ingredient;
+    public static final String ACTION_TEXT_CHANGED = "com.example.karim.bakingapp.Ui.TEXT_CHANGED";
 
     void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                          int appWidgetId) {
-        mIngredients = SharedPrefHelper.getList(context);
-        //  Log.wtf("SHIT", ingredient);
-        Log.wtf("SHIT1", mIngredients.get(2).getIngredient());
-
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
-        //  ingredient = ingredientList.get(position).getIngredient();
-        //        CharSequence widgetText = context.getString(R.string.appwidget_text);
-        // Construct the RemoteViews object
-//        ingredientList = getActivity().getIntent().getParcelableArrayListExtra("steps");
-//        Intent intent = new Intent(context, StepsListActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-//        views.setOnClickPendingIntent(R.id.imageView2, pendingIntent);
-//
-        StringBuilder Ingredient = new StringBuilder();
 
-        for (Ingredient ingredients : mIngredients) {
-            Ingredient.append(String.valueOf(ingredients.getIngredient())).append("  ")
-                    .append(ingredients.getMeasure()).append("  ")
-                    .append(String.valueOf(ingredients.getQuantity())).append("\n");
-        }
+//        StringBuilder Ingredient = new StringBuilder();
+
         views.setTextViewText(R.id.widget_text, ingredient);
 
-        // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
@@ -69,5 +55,13 @@ public class NewAppWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+        if (intent.getAction().equals(ACTION_TEXT_CHANGED)) {
+            // handle intent here
+            ingredient = intent.getStringExtra("NewString");
+        }
+    }
 }
 

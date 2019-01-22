@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.karim.bakingapp.Activites.DetailsActivity;
 import com.example.karim.bakingapp.Activites.R;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder> {
     StepsListActivity stepsListActivity;
     private StepsAdapter.OnItemClickListener mListener;
-    private ArrayList<Step> stepsList = new ArrayList<Step>();
+    private ArrayList<Step> stepsList ;
     private Context context;
 
     public StepsAdapter(ArrayList<Step> stepsList, Context context) {
@@ -58,7 +57,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
             public void onClick(View view) {
 
                 Log.v(getClass().getName(), "item Clicked:" + stepsList.get(position));
-                Toast.makeText(context, "Item num" + stepsList.get(position) + " Clicked", Toast.LENGTH_LONG).show();
 
                 Intent myIntent = new Intent(context, DetailsActivity.class);
                 myIntent.putExtra("position", position); //Optional parameters ing
