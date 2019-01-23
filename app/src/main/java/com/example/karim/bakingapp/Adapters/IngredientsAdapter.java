@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +54,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
                 myIntent.putParcelableArrayListExtra("ingredients", ingredientList); //Optional parameters
 
 
-
             }
         });
     }
@@ -63,7 +61,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public int getItemCount() {
 
-        Log.v("getItemCount", "size is: " + ingredientList.size());
+//        Log.v("getItemCount", "size is: " + ingredientList.size());
 
         return ingredientList.size();
     }

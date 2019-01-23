@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,7 @@ public class StepsListFragment extends Fragment {
         myIntent.putParcelableArrayListExtra("steps", stepsList); //Optional parameters
 
 
-        Log.v("steps activity test", stepsList.get(2).getDescription());
+        //  Log.v("steps activity test", stepsList.get(2).getDescription());
         generateDataList(stepsList);
         generateIngredientsList(ingredientList);
         return view;

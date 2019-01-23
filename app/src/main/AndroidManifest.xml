@@ -24,13 +24,12 @@
             android:name=".StepsListActivity"
             android:parentActivityName="com.example.karim.bakingapp.Activites.MainActivity" />
 
-        <activity android:name=".DetailsActivity"
-            android:parentActivityName="com.example.karim.bakingapp.Activites.StepsListActivity" />
+        <activity android:name=".DetailsActivity" />
 
         <receiver android:name="com.example.karim.bakingapp.Ui.NewAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.karim.bakingapp.Ui.TEXT_CHANGED" />
+               <!-- <action android:name="com.example.karim.bakingapp.Ui.TEXT_CHANGED" />-->
 
             </intent-filter>
 

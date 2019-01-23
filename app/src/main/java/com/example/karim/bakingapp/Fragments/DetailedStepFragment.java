@@ -12,11 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.example.karim.bakingapp.Activites.R;
 import com.example.karim.bakingapp.Models.Step;
@@ -39,18 +37,18 @@ import java.util.ArrayList;
 import static android.support.constraint.Constraints.TAG;
 
 public class DetailedStepFragment extends Fragment {
+    private static final String SAVED_PLAYER_POSITION = "player";
+    private static final String SAVED_PLAYER_READY = "ready";
     String stepDescription, videoURL, shortDescription;
     int position = 1;
     TextView fullDescription_tv, shortDescription_tv;
     Button nextButton, backButton;
     ArrayList<Step> stepList = new ArrayList<Step>();
-    private static final String SAVED_PLAYER_POSITION = "player";
-    private static final String SAVED_PLAYER_READY = "ready";
+    LinearLayout.LayoutParams params;
     private PlayerView playerView;
     private SimpleExoPlayer mExoPlayer;
     private long pausePosition;
     private boolean mGetWhenReady;
-    LinearLayout.LayoutParams params;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,8 +107,8 @@ public class DetailedStepFragment extends Fragment {
         if (videoURL != null && !videoURL.equals("")) {
             playerView.requestFocus();
             playerView.setVisibility(View.VISIBLE);
-
             initializePlayer(Uri.parse(videoURL));
+            //       releasePlayer();
             checkOrientation();
             getActivity().setTitle(shortDescription);
         } else {
@@ -179,6 +177,9 @@ public class DetailedStepFragment extends Fragment {
 
     private void initializePlayer(Uri mediaUri) {
 
+        if (mExoPlayer != null) {
+            releasePlayer();
+        }
         if (mExoPlayer == null) {
             try {
                 BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();

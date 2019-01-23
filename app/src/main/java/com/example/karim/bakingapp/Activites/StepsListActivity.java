@@ -1,11 +1,9 @@
 package com.example.karim.bakingapp.Activites;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.karim.bakingapp.Fragments.StepsListFragment;
 import com.example.karim.bakingapp.Models.Ingredient;
@@ -14,9 +12,9 @@ import com.example.karim.bakingapp.Models.Step;
 import java.util.ArrayList;
 
 public class StepsListActivity extends AppCompatActivity {
-    private RecyclerView stepsList_rv;
     /// ArrayList<Ingredient> ingredientsArrList = new ArrayList<Ingredient>();
     ArrayList<Ingredient> ingredientsList;
+    private RecyclerView stepsList_rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +24,7 @@ public class StepsListActivity extends AppCompatActivity {
 
 
         ArrayList<Step> stepsList = getIntent().getParcelableArrayListExtra("steps");
-       // ArrayList<Ingredient> ingredientsList = getIntent().getParcelableArrayListExtra("ingredients");
+        // ArrayList<Ingredient> ingredientsList = getIntent().getParcelableArrayListExtra("ingredients");
         ingredientsList = getIntent().getParcelableArrayListExtra("ingredients");
         android.app.FragmentManager fm = getFragmentManager();
         android.app.FragmentTransaction ft = fm.beginTransaction();

@@ -25,12 +25,11 @@ import com.example.karim.bakingapp.Ui.NewAppWidget;
 import java.util.ArrayList;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.MyViewHolder> {
+    int position;
     private OnItemClickListener mListener;
     private ArrayList<Model> recipeList;
     private ArrayList<Step> stepsList;
     private ArrayList<Ingredient> ingredientsList = new ArrayList<Ingredient>();
-    int position;
-
     private Context context;
     private MainActivity mainActivity;
 
@@ -75,13 +74,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                 myIntent.putParcelableArrayListExtra("steps", stepsList); //Optional parameters
                 myIntent.putParcelableArrayListExtra("ingredients", ingredientsList); //Optional parameters
 
-                    Intent intent = new Intent(NewAppWidget.ACTION_TEXT_CHANGED);
-                intent.putExtra("NewString", ingredientsList.get(position).getQuantity()+" "+ingredientsList.get(position).getMeasure()+ingredientsList.get(position).getIngredient()+"\n");
+                Intent intent = new Intent(NewAppWidget.ACTION_TEXT_CHANGED);
+                intent.putExtra("NewString", ingredientsList.get(position).getQuantity() + " " + ingredientsList.get(position).getMeasure() + ingredientsList.get(position).getIngredient() + "\n");
                 context.sendBroadcast(intent);
 //                Log.v("stepList", ingredientsList.get(2).getMeasure());
                 context.startActivity(myIntent);
                 //   context.startActivity(ingList);
-
+                widget();
             }
         });
     }
@@ -92,6 +91,30 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
         Log.v("getItemCount", "size is: " + recipeList.size());
 
         return recipeList.size();
+    }
+
+    void widget() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < ingredientsList.size(); i++) {
+            int serial = i + 1;
+            builder.append(serial + "- " + ingredientsList.get(i).getQuantity() + " " + ingredientsList.get(i).getMeasure() + " of " + ingredientsList.get(i).getIngredient() + "\n");
+        }
+
+        SharedPreferences preferences = context.getSharedPreferences("Recipe", 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("ingredientsWidget", builder.toString());
+        editor.apply();
+
+
+        Log.v("RecipeActivity", preferences.getString("ingredientsWidget", "no data"));
+
+//            Intent intentWidget = new Intent(getBaseContext(),RecipesWidget.class);
+//            intentWidget.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, NewAppWidget.class));
+//            intentWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+//            sendBroadcast(intentWidget);
+        NewAppWidget myWidget = new NewAppWidget();
+        myWidget.onUpdate(context, AppWidgetManager.getInstance(context), ids);
     }
 
     public interface OnItemClickListener {
@@ -122,26 +145,5 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                 }
             });
         }
-    }
-
-    void widget() {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < ingredientsList.size(); i++) {
-            int serial = i + 1;
-            builder.append(serial + "- " + ingredientsList.get(i).getQuantity() + " " + ingredientsList.get(i).getMeasure() + " of " + ingredientsList.get(i).getIngredient() + "\n");
-        }
-
-        SharedPreferences preferences = context.getSharedPreferences("Recipe", 0);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("ingredientsWidget", builder.toString());
-        editor.apply();
-
-//            Intent intentWidget = new Intent(getBaseContext(),RecipesWidget.class);
-//            intentWidget.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, NewAppWidget.class));
-//            intentWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
-//            sendBroadcast(intentWidget);
-        NewAppWidget myWidget = new NewAppWidget();
-        myWidget.onUpdate(context, AppWidgetManager.getInstance(context), ids);
     }
 }

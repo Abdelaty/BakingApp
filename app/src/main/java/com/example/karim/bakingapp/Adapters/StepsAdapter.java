@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder> {
     StepsListActivity stepsListActivity;
     private StepsAdapter.OnItemClickListener mListener;
-    private ArrayList<Step> stepsList ;
+    private ArrayList<Step> stepsList;
     private Context context;
 
     public StepsAdapter(ArrayList<Step> stepsList, Context context) {
@@ -61,7 +61,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
                 Intent myIntent = new Intent(context, DetailsActivity.class);
                 myIntent.putExtra("position", position); //Optional parameters ing
                 myIntent.putParcelableArrayListExtra("steps", stepsList); //Optional parameters
-                Log.v(getClass().getName(),"position is:"+position);
+                Log.v(getClass().getName(), "position is:" + position);
 
                 context.startActivity(myIntent);
             }
