@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karim.bakingapp.Adapters.RecipeListAdapter;
@@ -23,12 +25,14 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     RecipeListAdapter recipeListAdapter;
     private RecyclerView recipeList_rv;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recipeList_rv = findViewById(R.id.recipe_rv);
+        textView = findViewById(R.id.textView);
         generateNetworkCall();
     }
 
@@ -39,16 +43,17 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Model>>() {
             @Override
             public void onResponse(@NonNull Call<List<Model>> call, @NonNull Response<List<Model>> response) {
+                textView.setVisibility(View.GONE);
                 generateDataList((ArrayList<Model>) response.body());
-                Toast.makeText(MainActivity.this, "Generating Data Done", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Downloading Data Done", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Model>> call, @NonNull Throwable t) {
                 Toast.makeText(MainActivity.this, "Something went wrong...Please connect to internet!", Toast.LENGTH_SHORT).show();
-
+                textView.setText("Something went wrong...Please connect to internet!");
+                textView.setVisibility(View.VISIBLE);
                 t.getMessage();
-                Log.v(getPackageResourcePath(), t.getLocalizedMessage() + "ANNNNNNNNND" + t.getMessage());
             }
 
         });
