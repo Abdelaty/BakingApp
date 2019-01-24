@@ -78,6 +78,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                 intent.putExtra("NewString", ingredientsList.get(position).getQuantity() + " " + ingredientsList.get(position).getMeasure() + ingredientsList.get(position).getIngredient() + "\n");
                 context.sendBroadcast(intent);
 //                Log.v("stepList", ingredientsList.get(2).getMeasure());
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 context.startActivity(myIntent);
                 //   context.startActivity(ingList);
                 widget();

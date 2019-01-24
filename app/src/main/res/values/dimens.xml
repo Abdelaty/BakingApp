@@ -10,7 +10,7 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="bottom_margin_det">60dp</dimen>
     <dimen name="height_mar_det">64dp</dimen>
     <dimen name="short_disc_height">42dp</dimen>
-    <dimen name="margin_top_layout">124dp</dimen>
+    <dimen name="margin_top_layout">440dp</dimen>
     <dimen name="bottom_margin_left">5dp</dimen>
     <dimen name="bottom_marg">250dp</dimen>
     <dimen name="video_height">240dp</dimen>

@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<List<Model>> call, @NonNull Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                Log.v("Error", "Something went wrong.");
+                Toast.makeText(MainActivity.this, "Something went wrong...Please connect to internet!", Toast.LENGTH_SHORT).show();
+
                 t.getMessage();
                 Log.v(getPackageResourcePath(), t.getLocalizedMessage() + "ANNNNNNNNND" + t.getMessage());
             }
